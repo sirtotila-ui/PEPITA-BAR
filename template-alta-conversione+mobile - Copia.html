@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pepita Bar & Restaurant — Cucina Italiana a Ravenna</title>
+<meta name="description" content="Pepita Bar & Restaurant a Ravenna. Cucina italiana di qualità, terrazza all'aperto, atmosfera accogliente. Prenota il tuo tavolo oggi.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --color-bg: #FAFAF8;
+  --color-surface: #FFFFFF;
+  --color-text: #1A1A1A;
+  --color-text-muted: #6B6B6B;
+  --color-accent: #000033;
+  --color-accent-hover: #000022;
+  --color-accent-light: #FFF8DC;
+  --color-accent-gold: #FFD700;
+  --color-accent-red: #FF0000;
+  --color-border: #E8E6E1;
+  --color-highlight: #F5F0E8;
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-body: 'DM Sans', -apple-system, sans-serif;
+  --section-padding: clamp(3.5rem, 8vw, 7rem);
+  --container-max: 1120px;
+  --radius: 12px;
+  --radius-sm: 8px;
+}
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+body {
+  font-family: var(--font-body);
+  color: var(--color-text);
+  background: var(--color-bg);
+  line-height: 1.65;
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+img { max-width: 100%; height: auto; display: block; }
+a { text-decoration: none; color: inherit; }
+.container { width: 100%; max-width: var(--container-max); margin: 0 auto; padding: 0 1.25rem; }
+
+/* CTA */
+.cta-btn {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  background: var(--color-accent); color: #fff;
+  font-family: var(--font-body); font-size: 1rem; font-weight: 600;
+  padding: 1rem 2rem; border-radius: 60px; border: none; cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+  letter-spacing: -0.01em; text-align: center; justify-content: center; white-space: nowrap;
+}
+.cta-btn:hover { background: var(--color-accent-hover); transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0,0,51,0.25); }
+.cta-btn:active { transform: translateY(0); }
+.cta-btn svg { width: 18px; height: 18px; transition: transform 0.3s ease; }
+.cta-btn:hover svg { transform: translateX(3px); }
+
+/* Section headings */
+.section-label {
+  font-family: var(--font-body); font-size: 0.8rem; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.12em; color: var(--color-accent); margin-bottom: 1rem;
+}
+.section-title {
+  font-family: var(--font-display); font-size: clamp(1.8rem, 4vw, 2.8rem);
+  font-weight: 700; line-height: 1.2; color: var(--color-text); letter-spacing: -0.02em;
+}
+.section-subtitle { font-size: 1.1rem; color: var(--color-text-muted); margin-top: 1rem; max-width: 560px; line-height: 1.7; }
+
+/* NAVBAR */
+.navbar {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+  background: rgba(250,250,248,0.85); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid transparent; transition: border-color 0.3s ease;
+}
+.navbar.scrolled { border-bottom-color: var(--color-border); }
+.navbar-inner { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+.navbar-logo { 
+  font-family: var(--font-display); 
+  font-size: 1.35rem; 
+  font-weight: 700; 
+  color: var(--color-accent);
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  font-style: italic;
+  letter-spacing: -0.01em;
+}
+.navbar-links { display: none; list-style: none; gap: 2rem; }
+.navbar-links a { font-size: 0.9rem; font-weight: 500; color: var(--color-text-muted); transition: color 0.2s; }
+.navbar-links a:hover { color: var(--color-text); }
+.navbar-cta { font-size: 0.875rem !important; padding: 0.65rem 1.5rem !important; }
+.menu-toggle { display: flex; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 4px; }
+.menu-toggle span { width: 22px; height: 2px; background: var(--color-text); border-radius: 2px; transition: all 0.3s ease; }
+.mobile-menu { display: none; position: fixed; top: 64px; left: 0; right: 0; bottom: 0; background: var(--color-bg); z-index: 999; padding: 2rem 1.25rem; }
+.mobile-menu.active { display: flex; flex-direction: column; gap: 0.5rem; }
+.mobile-menu a { font-size: 1.25rem; font-weight: 500; padding: 1rem 0; border-bottom: 1px solid var(--color-border); display: block; }
+.mobile-menu .cta-btn { margin-top: 1.5rem; width: 100%; }
+@media (min-width: 768px) { .navbar-links { display: flex; } .menu-toggle { display: none; } }
+
+/* HERO */
+.hero { padding-top: calc(64px + var(--section-padding)); padding-bottom: var(--section-padding); }
+.hero-content { text-align: center; max-width: 680px; margin: 0 auto; }
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  background: var(--color-accent-light); color: var(--color-accent);
+  font-size: 0.8rem; font-weight: 600; padding: 0.5rem 1rem; border-radius: 60px; margin-bottom: 1.5rem;
+}
+.hero-badge::before { content: ''; width: 6px; height: 6px; background: var(--color-accent-gold); border-radius: 50%; }
+.hero h1 {
+  font-family: var(--font-display); font-size: clamp(2.2rem, 6vw, 3.5rem);
+  font-weight: 700; line-height: 1.12; letter-spacing: -0.03em; margin-bottom: 1.25rem;
+}
+.hero h1 em { font-style: italic; color: var(--color-accent-gold); }
+.hero-sub {
+  font-size: clamp(1rem, 2.5vw, 1.2rem); color: var(--color-text-muted); line-height: 1.7;
+  margin-bottom: 2rem; max-width: 520px; margin-left: auto; margin-right: auto;
+}
+.hero-cta-group { display: flex; flex-direction: column; align-items: center; gap: 0.75rem; }
+.hero-cta-note { font-size: 0.8rem; color: var(--color-text-muted); }
+.hero-image {
+  margin-top: 3rem; border-radius: var(--radius); overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.08), 0 1px 3px rgba(0,0,0,0.04);
+  border: 1px solid var(--color-border); aspect-ratio: 16/10;
+  background: var(--color-highlight); display: flex; align-items: center; justify-content: center;
+  color: var(--color-text-muted); font-size: 0.9rem;
+}
+
+/* PROBLEM */
+.problem { padding: var(--section-padding) 0; background: var(--color-surface); border-top: 1px solid var(--color-border); border-bottom: 1px solid var(--color-border); }
+.problem-grid { display: grid; gap: 1.5rem; margin-top: 2.5rem; }
+.problem-card {
+  background: var(--color-bg); border: 1px solid var(--color-border); border-radius: var(--radius);
+  padding: 1.5rem; display: flex; gap: 1rem; align-items: flex-start;
+}
+.problem-icon {
+  flex-shrink: 0; width: 40px; height: 40px; background: #FEF0E7;
+  border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; font-size: 1.2rem;
+}
+.problem-card h3 { font-size: 1rem; font-weight: 600; margin-bottom: 0.35rem; }
+.problem-card p { font-size: 0.9rem; color: var(--color-text-muted); line-height: 1.6; }
+@media (min-width: 768px) { .problem-grid { grid-template-columns: repeat(3, 1fr); } }
+
+/* SOLUTION */
+.solution { padding: var(--section-padding) 0; }
+.solution-content { display: grid; gap: 3rem; align-items: center; }
+.solution-visual {
+  border-radius: var(--radius); overflow: hidden; background: var(--color-accent-light);
+  aspect-ratio: 4/3; display: flex; align-items: center; justify-content: center;
+  color: var(--color-accent); font-size: 0.9rem; border: 1px solid var(--color-border);
+}
+.solution-points { display: flex; flex-direction: column; gap: 1.25rem; margin-top: 1.5rem; }
+.solution-point { display: flex; gap: 0.75rem; align-items: flex-start; }
+.solution-check {
+  flex-shrink: 0; width: 24px; height: 24px; background: var(--color-accent);
+  border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-top: 2px;
+}
+.solution-check svg { width: 14px; height: 14px; stroke: #fff; stroke-width: 2.5; fill: none; }
+.solution-point p { font-size: 0.95rem; line-height: 1.6; }
+.solution-point strong { font-weight: 600; }
+@media (min-width: 768px) { .solution-content { grid-template-columns: 1fr 1fr; gap: 4rem; } }
+
+/* SOCIAL PROOF */
+.proof { padding: var(--section-padding) 0; background: var(--color-surface); border-top: 1px solid var(--color-border); border-bottom: 1px solid var(--color-border); }
+.proof-stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; margin-bottom: 3rem; }
+.stat { text-align: center; padding: 1.25rem; }
+.stat-number { font-family: var(--font-display); font-size: clamp(2rem, 4vw, 2.8rem); font-weight: 700; color: var(--color-accent); letter-spacing: -0.02em; }
+.stat-label { font-size: 0.85rem; color: var(--color-text-muted); margin-top: 0.25rem; }
+.testimonials { display: grid; gap: 1.5rem; }
+.testimonial { background: var(--color-bg); border: 1px solid var(--color-border); border-radius: var(--radius); padding: 1.75rem; }
+.testimonial-stars { color: var(--color-accent-gold); font-size: 0.9rem; letter-spacing: 2px; margin-bottom: 0.75rem; }
+.testimonial p { font-size: 0.95rem; line-height: 1.7; color: var(--color-text); font-style: italic; }
+.testimonial-author { display: flex; align-items: center; gap: 0.75rem; margin-top: 1.25rem; }
+.testimonial-avatar {
+  width: 40px; height: 40px; border-radius: 50%; background: var(--color-accent-light);
+  display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 0.85rem; color: var(--color-accent);
+}
+.testimonial-name { font-weight: 600; font-size: 0.9rem; }
+.testimonial-role { font-size: 0.8rem; color: var(--color-text-muted); }
+@media (min-width: 768px) { .proof-stats { grid-template-columns: repeat(4, 1fr); } .testimonials { grid-template-columns: repeat(2, 1fr); } }
+
+/* SERVICES */
+.services { padding: var(--section-padding) 0; }
+.services-header { text-align: center; margin-bottom: 3rem; }
+.services-header .section-subtitle { margin-left: auto; margin-right: auto; }
+.services-grid { display: grid; gap: 1.25rem; }
+.service-card {
+  background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius);
+  padding: 2rem 1.5rem; transition: all 0.3s ease;
+}
+.service-card:hover { border-color: var(--color-accent); box-shadow: 0 4px 20px rgba(0,0,51,0.08); }
+.service-icon {
+  width: 48px; height: 48px; background: var(--color-accent-light); border-radius: var(--radius-sm);
+  display: flex; align-items: center; justify-content: center; font-size: 1.4rem; margin-bottom: 1.25rem;
+}
+.service-card h3 { font-size: 1.1rem; font-weight: 600; margin-bottom: 0.5rem; }
+.service-card p { font-size: 0.9rem; color: var(--color-text-muted); line-height: 1.65; }
+@media (min-width: 768px) { .services-grid { grid-template-columns: repeat(3, 1fr); } }
+
+/* PROCESS */
+.process { padding: var(--section-padding) 0; background: var(--color-surface); border-top: 1px solid var(--color-border); border-bottom: 1px solid var(--color-border); }
+.process-header { text-align: center; margin-bottom: 3rem; }
+.process-header .section-subtitle { margin-left: auto; margin-right: auto; }
+.process-steps { display: grid; gap: 1.5rem; max-width: 800px; margin: 0 auto; }
+.process-step {
+  display: flex; gap: 1.25rem; align-items: flex-start; padding: 1.5rem;
+  background: var(--color-bg); border-radius: var(--radius); border: 1px solid var(--color-border);
+}
+.step-number {
+  flex-shrink: 0; width: 44px; height: 44px; background: var(--color-accent); color: #fff;
+  border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  font-weight: 700; font-size: 1.1rem; font-family: var(--font-display);
+}
+.process-step h3 { font-size: 1.05rem; font-weight: 600; margin-bottom: 0.35rem; }
+.process-step p { font-size: 0.9rem; color: var(--color-text-muted); line-height: 1.6; }
+
+/* PRICING */
+.pricing { padding: var(--section-padding) 0; }
+.pricing-header { text-align: center; margin-bottom: 3rem; }
+.pricing-header .section-subtitle { margin-left: auto; margin-right: auto; }
+.pricing-card {
+  max-width: 480px; margin: 0 auto; background: var(--color-surface);
+  border: 2px solid var(--color-accent); border-radius: var(--radius);
+  padding: 2.5rem 2rem; text-align: center; position: relative;
+}
+.pricing-popular {
+  position: absolute; top: -14px; left: 50%; transform: translateX(-50%);
+  background: var(--color-accent); color: #fff; font-size: 0.75rem; font-weight: 600;
+  padding: 0.35rem 1rem; border-radius: 60px; text-transform: uppercase; letter-spacing: 0.08em;
+}
+.pricing-price { font-family: var(--font-display); font-size: clamp(2.5rem, 5vw, 3.2rem); font-weight: 700; color: var(--color-text); margin: 1rem 0 0.25rem; }
+.pricing-period { font-size: 0.9rem; color: var(--color-text-muted); margin-bottom: 1.5rem; }
+.pricing-features { list-style: none; text-align: left; margin-bottom: 2rem; }
+.pricing-features li {
+  padding: 0.6rem 0; border-bottom: 1px solid var(--color-border); font-size: 0.9rem;
+  display: flex; align-items: center; gap: 0.6rem;
+}
+.pricing-features li::before { content: '✓'; color: var(--color-accent); font-weight: 700; font-size: 0.85rem; }
+.pricing-card .cta-btn { width: 100%; }
+.pricing-guarantee { font-size: 0.8rem; color: var(--color-text-muted); margin-top: 1rem; }
+
+/* FAQ */
+.faq { padding: var(--section-padding) 0; background: var(--color-surface); border-top: 1px solid var(--color-border); border-bottom: 1px solid var(--color-border); }
+.faq-header { text-align: center; margin-bottom: 3rem; }
+.faq-list { max-width: 700px; margin: 0 auto; }
+.faq-item { border-bottom: 1px solid var(--color-border); }
+.faq-question {
+  width: 100%; background: none; border: none; text-align: left; padding: 1.25rem 0;
+  font-family: var(--font-body); font-size: 1rem; font-weight: 600; color: var(--color-text);
+  cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+}
+.faq-question::after { content: '+'; font-size: 1.3rem; font-weight: 400; color: var(--color-text-muted); transition: transform 0.3s ease; flex-shrink: 0; }
+.faq-item.active .faq-question::after { transform: rotate(45deg); }
+.faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.4s cubic-bezier(0.22, 1, 0.36, 1); }
+.faq-answer-inner { padding-bottom: 1.25rem; font-size: 0.9rem; color: var(--color-text-muted); line-height: 1.7; }
+
+/* FOOTER CTA */
+.footer-cta { padding: var(--section-padding) 0; text-align: center; }
+.footer-cta-inner { max-width: 560px; margin: 0 auto; }
+.footer-cta .section-title { margin-bottom: 1rem; }
+.footer-cta .section-subtitle { margin-left: auto; margin-right: auto; margin-bottom: 2rem; }
+footer { padding: 2rem 0; border-top: 1px solid var(--color-border); text-align: center; font-size: 0.8rem; color: var(--color-text-muted); }
+footer a { color: var(--color-text-muted); text-decoration: underline; }
+footer a:hover { color: var(--color-text); }
+
+/* ANIMATIONS */
+.fade-up {
+  opacity: 0; transform: translateY(24px);
+  transition: opacity 0.6s cubic-bezier(0.22,1,0.36,1), transform 0.6s cubic-bezier(0.22,1,0.36,1);
+}
+.fade-up.visible { opacity: 1; transform: translateY(0); }
+.stagger > .fade-up:nth-child(1) { transition-delay: 0s; }
+.stagger > .fade-up:nth-child(2) { transition-delay: 0.08s; }
+.stagger > .fade-up:nth-child(3) { transition-delay: 0.16s; }
+.stagger > .fade-up:nth-child(4) { transition-delay: 0.24s; }
+
+/* MAP SECTION */
+.map-section { padding: var(--section-padding) 0; background: var(--color-surface); }
+.map-container {
+  border-radius: var(--radius); overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08); border: 1px solid var(--color-border);
+  height: 450px; margin-top: 2rem;
+}
+.map-container iframe { width: 100%; height: 100%; border: none; }
+
+/* CARD GRID */
+.cards-section { padding: var(--section-padding) 0; }
+.cards-header { text-align: center; margin-bottom: 3rem; }
+.cards-header .section-subtitle { margin-left: auto; margin-right: auto; }
+.cards-grid { display: grid; gap: 1.5rem; }
+.card-item {
+  background: var(--color-surface); border-radius: 24px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08); overflow: hidden;
+  display: flex; flex-direction: column;
+}
+.card-header {
+  padding: 1.5rem 1.5rem 0; display: flex; justify-content: space-between;
+  align-items: flex-start; gap: 1rem;
+}
+.card-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.card-tag {
+  background: var(--color-text); color: #fff; padding: 0.4rem 0.9rem;
+  border-radius: 20px; font-size: 0.75rem; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.05em;
+}
+.card-date {
+  display: flex; align-items: center; gap: 0.5rem; flex-shrink: 0;
+}
+.card-date-month {
+  background: var(--color-text); color: #fff; padding: 0.4rem 0.9rem;
+  border-radius: 20px; font-size: 0.75rem; font-weight: 600;
+  text-transform: uppercase;
+}
+.card-date-day {
+  background: #fff; color: var(--color-text); padding: 0.4rem 0.9rem;
+  border-radius: 20px; font-size: 0.75rem; font-weight: 600;
+  border: 1px solid var(--color-border);
+}
+.card-content {
+  padding: 1.5rem; flex-grow: 1;
+}
+.card-title {
+  font-family: var(--font-display); font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: 700; color: var(--color-text); margin-bottom: 0.75rem;
+  line-height: 1.2;
+}
+.card-description {
+  font-size: 0.95rem; color: var(--color-text-muted); line-height: 1.7;
+  margin-bottom: 1.5rem;
+}
+.card-image-area {
+  background: var(--color-highlight); min-height: 200px;
+  border-radius: 0 0 24px 24px; padding: 1.5rem;
+  display: flex; align-items: flex-end;
+}
+.card-location {
+  color: #fff; display: flex; align-items: center; gap: 0.5rem;
+  font-size: 0.9rem; font-weight: 500;
+}
+.card-location svg { width: 16px; height: 16px; flex-shrink: 0; }
+@media (min-width: 768px) { .cards-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1024px) { .cards-grid { grid-template-columns: repeat(3, 1fr); } }
+
+/* MOBILE CTA BAR */
+.mobile-cta-bar {
+  display: none; position: fixed; bottom: 0; left: 0; right: 0;
+  background: var(--color-surface); border-top: 1px solid var(--color-border);
+  padding: 0.75rem 1.25rem; z-index: 998; box-shadow: 0 -4px 20px rgba(0,0,0,0.06);
+}
+.mobile-cta-bar .cta-btn { width: 100%; }
+@media (max-width: 767px) { .mobile-cta-bar.show { display: block; } body.has-mobile-cta { padding-bottom: 80px; } }
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar" id="navbar">
+  <div class="container navbar-inner">
+    <a href="#" class="navbar-logo" style="position:relative;"><img src="assets/logo.png" alt="Pepita" style="width:36px;height:36px;margin-right:0.65rem;flex-shrink:0;display:block;" />Pepita</a>
+    <ul class="navbar-links">
+      <li><a href="#servizi">Menu</a></li>
+      <li><a href="#come-funziona">Chi Siamo</a></li>
+      <li><a href="#recensioni">Recensioni</a></li>
+      <li><a href="#faq">FAQ</a></li>
+    </ul>
+    <a href="#contatto" class="cta-btn navbar-cta" style="display:none" id="nav-cta">Prenota un Tavolo</a>
+    <button class="menu-toggle" id="menu-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobile-menu">
+  <a href="#servizi" onclick="closeMenu()">Menu</a>
+  <a href="#come-funziona" onclick="closeMenu()">Chi Siamo</a>
+  <a href="#recensioni" onclick="closeMenu()">Recensioni</a>
+  <a href="#faq" onclick="closeMenu()">FAQ</a>
+  <a href="#contatto" class="cta-btn" onclick="closeMenu()">Prenota un Tavolo <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+</div>
+
+<!-- 1. HERO -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-content">
+      <div class="hero-badge fade-up">Bar & Restaurant · Ravenna</div>
+      <h1 class="fade-up">Autentica Cucina Italiana<br><em>a Ravenna</em></h1>
+      <p class="hero-sub fade-up">Scopri i sapori tradizionali della Romagna in un ambiente accogliente. Terrazza all'aperto disponibile.</p>
+      <div class="hero-cta-group fade-up">
+        <a href="#contatto" class="cta-btn">Prenota un Tavolo <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+        <span class="hero-cta-note">Aperto tutti i giorni · Terrazza disponibile</span>
+      </div>
+    </div>
+    <div class="hero-image fade-up">
+      <img src="assets/header-facade.png" alt="Pepita Bar & Restaurant - Facciata" style="width:100%;height:100%;object-fit:cover;" />
+    </div>
+  </div>
+</section>
+
+<!-- 2. PROBLEM -->
+<section class="problem">
+  <div class="container">
+    <div class="section-label fade-up">La nostra filosofia</div>
+    <h2 class="section-title fade-up">Perché scegliere Pepita</h2>
+    <p class="section-subtitle fade-up">Un'esperienza culinaria che unisce tradizione e qualità in ogni piatto.</p>
+    <div class="problem-grid stagger">
+      <div class="problem-card fade-up"><div class="problem-icon">🍝</div><div><h3>Ingredienti Freschi</h3><p>Selezioniamo quotidianamente prodotti locali di alta qualità per garantire il sapore autentico.</p></div></div>
+      <div class="problem-card fade-up"><div class="problem-icon">🌿</div><div><h3>Terrazza all'Aperto</h3><p>Goditi i tuoi pasti nella nostra accogliente terrazza, perfetta per ogni stagione.</p></div></div>
+      <div class="problem-card fade-up"><div class="problem-icon">👨‍🍳</div><div><h3>Cucina Tradizionale</h3><p>Ricette della tradizione romagnola preparate con passione e dedizione.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 3. SOLUTION -->
+<section class="solution">
+  <div class="container">
+    <div class="solution-content">
+      <div class="solution-visual fade-up">{{Immagine/mockup}}</div>
+      <div>
+        <div class="section-label fade-up">La nostra proposta</div>
+        <h2 class="section-title fade-up">Un'esperienza da ricordare</h2>
+        <div class="solution-points">
+          <div class="solution-point fade-up"><div class="solution-check"><svg viewBox="0 0 24 24"><path d="M5 12l5 5L20 7"/></svg></div><p><strong>Menu Vario</strong> — Dalle specialità della casa ai piatti della tradizione, c'è sempre qualcosa per tutti i gusti.</p></div>
+          <div class="solution-point fade-up"><div class="solution-check"><svg viewBox="0 0 24 24"><path d="M5 12l5 5L20 7"/></svg></div><p><strong>Atmosfera Accogliente</strong> — Ambiente informale e familiare, perfetto per cene romantiche o serate con amici.</p></div>
+          <div class="solution-point fade-up"><div class="solution-check"><svg viewBox="0 0 24 24"><path d="M5 12l5 5L20 7"/></svg></div><p><strong>Servizio Professionale</strong> — Staff cordiale e attento alle tue esigenze per rendere ogni visita speciale.</p></div>
+        </div>
+        <div style="margin-top:2rem" class="fade-up">
+          <a href="#contatto" class="cta-btn">Prenota il Tuo Tavolo <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 4. SOCIAL PROOF -->
+<section class="proof" id="recensioni">
+  <div class="container">
+    <div style="text-align:center">
+      <div class="section-label fade-up">Cosa dicono di noi</div>
+      <h2 class="section-title fade-up">I nostri clienti ci amano</h2>
+    </div>
+    <div class="proof-stats stagger" style="margin-top:2.5rem">
+      <div class="stat fade-up"><div class="stat-number">500+</div><div class="stat-label">Clienti Soddisfatti</div></div>
+      <div class="stat fade-up"><div class="stat-number">4.8</div><div class="stat-label">Valutazione Media</div></div>
+      <div class="stat fade-up"><div class="stat-number">10+</div><div class="stat-label">Anni di Esperienza</div></div>
+      <div class="stat fade-up"><div class="stat-number">100%</div><div class="stat-label">Ingredienti Freschi</div></div>
+    </div>
+    <div class="testimonials stagger" style="margin-top:3rem">
+      <div class="testimonial fade-up">
+        <div class="testimonial-stars">★★★★★</div>
+        <p>"Cena fantastica! Il cibo è eccellente e il servizio impeccabile. La terrazza è bellissima, torneremo sicuramente."</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">MR</div>
+          <div><div class="testimonial-name">Marco Rossi</div><div class="testimonial-role">Cliente</div></div>
+        </div>
+      </div>
+      <div class="testimonial fade-up">
+        <div class="testimonial-stars">★★★★★</div>
+        <p>"Uno dei migliori ristoranti di Ravenna. Piatti tradizionali preparati con cura, ambiente accogliente e prezzi giusti."</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">LB</div>
+          <div><div class="testimonial-name">Laura Bianchi</div><div class="testimonial-role">Cliente</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 5. SERVICES -->
+<section class="services" id="servizi">
+  <div class="container">
+    <div class="services-header">
+      <div class="section-label fade-up">Il nostro menu</div>
+      <h2 class="section-title fade-up">Cosa offriamo</h2>
+      <p class="section-subtitle fade-up">Dalla colazione alla cena, passando per aperitivi e pranzi di lavoro.</p>
+    </div>
+    <div class="services-grid stagger">
+      <div class="service-card fade-up"><div class="service-icon">🍝</div><h3>Primi Piatti</h3><p>Pasta fresca fatta in casa e risotti della tradizione romagnola.</p></div>
+      <div class="service-card fade-up"><div class="service-icon">🥩</div><h3>Secondi Piatti</h3><p>Carne e pesce di qualità, preparati con tecniche tradizionali.</p></div>
+      <div class="service-card fade-up"><div class="service-icon">🍷</div><h3>Aperitivi</h3><p>Selezione di vini locali e cocktail artigianali ogni sera.</p></div>
+      <div class="service-card fade-up"><div class="service-icon">☕</div><h3>Colazione</h3><p>Cornetti freschi, caffè e dolci fatti in casa ogni mattina.</p></div>
+      <div class="service-card fade-up"><div class="service-icon">🌿</div><h3>Opzioni Vegetariane</h3><p>Piatti vegetariani e vegani disponibili su richiesta.</p></div>
+      <div class="service-card fade-up"><div class="service-icon">🎂</div><h3>Dolci</h3><p>Dessert fatti in casa e torte per occasioni speciali.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 6. PROCESS -->
+<section class="process" id="come-funziona">
+  <div class="container">
+    <div class="process-header">
+      <div class="section-label fade-up">Come funziona</div>
+      <h2 class="section-title fade-up">Prenota in 3 semplici passi</h2>
+      <p class="section-subtitle fade-up">Prenotare un tavolo non è mai stato così facile.</p>
+    </div>
+    <div class="process-steps stagger">
+      <div class="process-step fade-up"><div class="step-number">1</div><div><h3>Chiama o Prenota Online</h3><p>Contattaci telefonicamente o compila il form di prenotazione. Ti risponderemo entro poche ore.</p></div></div>
+      <div class="process-step fade-up"><div class="step-number">2</div><div><h3>Conferma la Tua Prenotazione</h3><p>Riceverai una conferma con tutti i dettagli: data, ora e numero di persone.</p></div></div>
+      <div class="process-step fade-up"><div class="step-number">3</div><div><h3>Vieni a Trovarci</h3><p>Presentati all'ora concordata e goditi un'esperienza culinaria indimenticabile.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 7. PRICING -->
+<section class="pricing" id="contatto">
+  <div class="container">
+    <div class="pricing-header">
+      <div class="section-label fade-up">Contatti</div>
+      <h2 class="section-title fade-up">Prenota il tuo tavolo</h2>
+      <p class="section-subtitle fade-up">Siamo aperti tutti i giorni. Chiamaci o vieni a trovarci.</p>
+    </div>
+    <div class="pricing-card fade-up">
+      <div class="pricing-popular">Info</div>
+      <h3 style="font-size:1.1rem;font-weight:600">Pepita Bar & Restaurant</h3>
+      <div class="pricing-price" style="font-size:1.5rem;margin:1rem 0">0544 453956</div>
+      <div class="pricing-period">Telefono · Disponibile tutti i giorni</div>
+      <ul class="pricing-features">
+        <li><a href="https://maps.google.com/?q=Via+Giuseppe+di+Vittorio+14+Ravenna" target="_blank" style="color:inherit;text-decoration:none;">Via Giuseppe di Vittorio, 14</a></li>
+        <li>48123 Ravenna RA</li>
+        <li>Terrazza all'aperto disponibile</li>
+        <li>Aperto tutti i giorni</li>
+        <li>Prenotazioni consigliate</li>
+        <li>Parcheggio nelle vicinanze</li>
+        <li>Accessibile con mezzi pubblici</li>
+      </ul>
+      <a href="tel:0544453956" class="cta-btn">Chiama Ora <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+      <p class="pricing-guarantee">Ti aspettiamo per un'esperienza indimenticabile.</p>
+    </div>
+  </div>
+</section>
+
+<!-- MAP SECTION -->
+<section class="map-section">
+  <div class="container">
+    <div class="section-label fade-up">Dove siamo</div>
+    <h2 class="section-title fade-up">Vieni a trovarci</h2>
+    <p class="section-subtitle fade-up">Via Giuseppe di Vittorio, 14, 48123 Ravenna RA</p>
+    <div class="map-container fade-up">
+      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2878.5!2d12.203!3d44.417!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x132cc2c8c8c8c8c9%3A0x8c8c8c8c8c8c8c8c!2sVia%20Giuseppe%20di%20Vittorio%2C%2014%2C%2048123%20Ravenna%20RA!5e0!3m2!1sit!2sit!4v1234567890" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+  </div>
+</section>
+
+<!-- 8. FAQ -->
+<section class="faq" id="faq">
+  <div class="container">
+    <div class="faq-header">
+      <div class="section-label fade-up">Domande frequenti</div>
+      <h2 class="section-title fade-up">Tutto quello che vuoi sapere</h2>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item fade-up"><button class="faq-question">Quali sono gli orari di apertura?</button><div class="faq-answer"><div class="faq-answer-inner">Siamo aperti tutti i giorni. Per gli orari precisi ti consigliamo di chiamarci al 0544 453956.</div></div></div>
+      <div class="faq-item fade-up"><button class="faq-question">È necessaria la prenotazione?</button><div class="faq-answer"><div class="faq-answer-inner">La prenotazione è consigliata, soprattutto nei weekend e per gruppi numerosi. Puoi chiamarci o venire direttamente in loco.</div></div></div>
+      <div class="faq-item fade-up"><button class="faq-question">Avete opzioni vegetariane o vegane?</button><div class="faq-answer"><div class="faq-answer-inner">Sì, abbiamo diverse opzioni vegetariane e vegane nel nostro menu. Informa il cameriere delle tue preferenze alimentari.</div></div></div>
+      <div class="faq-item fade-up"><button class="faq-question">La terrazza è disponibile tutto l'anno?</button><div class="faq-answer"><div class="faq-answer-inner">Sì, la nostra terrazza è disponibile tutto l'anno. In inverno è coperta e riscaldata per garantire il massimo comfort.</div></div></div>
+      <div class="faq-item fade-up"><button class="faq-question">Accettate pagamenti con carta?</button><div class="faq-answer"><div class="faq-answer-inner">Sì, accettiamo pagamenti con carta di credito, bancomat e contanti.</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 9. FOOTER CTA -->
+<section class="footer-cta">
+  <div class="container">
+    <div class="footer-cta-inner">
+      <h2 class="section-title fade-up">Pronto per un'esperienza indimenticabile?</h2>
+      <p class="section-subtitle fade-up">Prenota il tuo tavolo oggi e vieni a scoprire i sapori autentici della Romagna.</p>
+      <a href="#contatto" class="cta-btn fade-up">Prenota un Tavolo <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+    </div>
+  </div>
+</section>
+
+<footer><div class="container"><p>&copy; 2025 Pepita Bar & Restaurant · <a href="https://maps.google.com/?q=Via+Giuseppe+di+Vittorio+14+Ravenna" target="_blank" style="color:inherit;">Via Giuseppe di Vittorio, 14, 48123 Ravenna RA</a> · Tel. <a href="tel:0544453956" style="color:inherit;">0544 453956</a> · <a href="#">Privacy Policy</a></p></div></footer>
+
+<!-- MOBILE STICKY CTA -->
+<div class="mobile-cta-bar" id="mobile-cta-bar">
+  <a href="#contatto" class="cta-btn">Prenota un Tavolo <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+</div>
+
+<script>
+const navbar=document.getElementById('navbar'),navCta=document.getElementById('nav-cta');
+window.addEventListener('scroll',()=>{if(window.scrollY>50){navbar.classList.add('scrolled');if(window.innerWidth>=768)navCta.style.display='inline-flex'}else{navbar.classList.remove('scrolled');navCta.style.display='none'}});
+const menuToggle=document.getElementById('menu-toggle'),mobileMenu=document.getElementById('mobile-menu');
+menuToggle.addEventListener('click',()=>{mobileMenu.classList.toggle('active');document.body.style.overflow=mobileMenu.classList.contains('active')?'hidden':''});
+function closeMenu(){mobileMenu.classList.remove('active');document.body.style.overflow=''}
+document.querySelectorAll('.faq-question').forEach(b=>{b.addEventListener('click',()=>{const i=b.parentElement,a=i.querySelector('.faq-answer'),w=i.classList.contains('active');document.querySelectorAll('.faq-item').forEach(x=>{x.classList.remove('active');x.querySelector('.faq-answer').style.maxHeight=null});if(!w){i.classList.add('active');a.style.maxHeight=a.scrollHeight+'px'}})});
+const observer=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('visible')})},{threshold:0.1,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.fade-up').forEach(el=>observer.observe(el));
+const mobileCta=document.getElementById('mobile-cta-bar');
+new IntersectionObserver(e=>{e.forEach(x=>{if(!x.isIntersecting){mobileCta.classList.add('show');document.body.classList.add('has-mobile-cta')}else{mobileCta.classList.remove('show');document.body.classList.remove('has-mobile-cta')}})},{threshold:0}).observe(document.querySelector('.hero'));
+</script>
+</body>
+</html>
